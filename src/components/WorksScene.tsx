@@ -1,23 +1,30 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+
+import wengyVideo from "@/assets/wengy.mp4";
+import spingImg from "@/assets/sping.png";
+import nikeVideo from "@/assets/nike.mp4";
+import avaImg from "@/assets/ava.png";
+import oleksiiVideo from "@/assets/oleksii.mp4";
+import portfolioImg from "@/assets/portfolio.png";
+
 interface WorkItem {
   id: number;
   title: string;
   description: string;
   tags: string[];
-  image?: string; 
-  video?: string; 
+  image?: string;
+  video?: string;
 }
 
 const works: WorkItem[] = [
   {
     id: 1,
     title: "Wengy",
-    description:
-      "Overmono is a visual experiment inspired by the duo's raw",
+    description: "Overmono is a visual experiment inspired by the duo's raw",
     tags: ["Motion Design", "Art Direction"],
-    video: "src/assets/wengy.mp4",
+    video: wengyVideo,
   },
   {
     id: 2,
@@ -25,15 +32,14 @@ const works: WorkItem[] = [
     description:
       "Likorn is a digital study exploring organic motion and sculptural forms.",
     tags: ["Motion Design", "Art Direction"],
-    image: "src/assets/sping.png",
+    image: spingImg,
   },
   {
     id: 3,
     title: "Air 1000",
-    description:
-      "Solo Model is a stripped-down visual study focused on presence",
+    description: "Solo Model is a stripped-down visual study focused on presence",
     tags: ["Motion Design", "Art Direction"],
-    video: "src/assets/nike.mp4",
+    video: nikeVideo,
   },
   {
     id: 4,
@@ -41,25 +47,22 @@ const works: WorkItem[] = [
     description:
       "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow. ",
     tags: ["Motion Design", "Art Direction"],
-    image: "src/assets/ava.png",
+    image: avaImg,
   },
   {
     id: 5,
     title: "Zarytskyi",
-    description:
-      "Protfolio website creted with next and frame-motion",
+    description: "Portfolio website created with Next.js and Framer Motion.",
     tags: ["Web Development", "Motion Design"],
-    video: "src/assets/oleksii.mp4",
+    video: oleksiiVideo,
   },
   {
     id: 6,
     title: "Moly Blake",
-    description:
-      "Protfolio design ",
+    description: "Portfolio design.",
     tags: ["Design", "Figma"],
-    image: "src/assets/portfolio.png",
+    image: portfolioImg,
   },
-
 ];
 
 export const WorksScene = () => {
@@ -82,10 +85,7 @@ export const WorksScene = () => {
     },
   };
 
-  const spacedText = (text: string) => text.split("").join("  ");
-
   return (
-    
     <div className="relative h-full w-full bg-background overflow-y-auto">
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
         {/* Section divider */}
@@ -118,7 +118,7 @@ export const WorksScene = () => {
               onMouseEnter={() => setHoveredId(work.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
-            
+              {/* media */}
               <div className="relative w-full overflow-hidden">
                 {work.video ? (
                   <motion.video
@@ -154,7 +154,7 @@ export const WorksScene = () => {
                 )}
               </div>
 
-             
+              {/* tags */}
               <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-20">
                 {work.tags.map((tag) => (
                   <span
@@ -166,7 +166,7 @@ export const WorksScene = () => {
                 ))}
               </div>
 
-              
+              {/* bottom info */}
               <div className="absolute left-0 right-0 bottom-0 z-20 bg-black/55 backdrop-blur-sm px-4 py-3">
                 <h3 className="text-sm font-semibold text-white">
                   {work.title}

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import heroVideo from "@/assets/hourse.mp4";
 
 const WordsLine = ({
   text,
@@ -66,7 +67,6 @@ const StaircaseReveal = ({
           }}
           className="absolute left-0 w-full bg-background will-change-transform"
           style={{
-            // небольшое перекрытие полос, чтобы не было щелей
             top: `${index * stripHeight - 1}%`,
             height: `calc(${stripHeight}% + 3%)`,
           }}
@@ -90,7 +90,7 @@ const StaircaseReveal = ({
 };
 
 export const HeroScene = () => {
-  const videoSrc = "src/assets/hourse.mp4";
+  const videoSrc = heroVideo;
 
   const VIDEO_START_DELAY = 2.2;
   const LOGO_START_DELAY = 3.9;
