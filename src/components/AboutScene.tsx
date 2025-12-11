@@ -19,7 +19,7 @@ const founders: Founder[] = [
   },
   {
     name: "Sofia Matuhkina",
-    role: "Producer & Partner",
+    role: "Designer & Partner",
     quote: "Strong work is where precision, structure and emotion meet.",
     image: sofia,
   },
@@ -39,7 +39,7 @@ export const AboutScene = () => {
       "
     >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
-        {/* Quote — плавно снизу */}
+        {/* Quote  */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,9 +56,9 @@ export const AboutScene = () => {
 
         <div className="border-t border-border mb-16" />
 
-        {/* WHO WE ARE блок */}
+        {/* WHO WE ARE  */}
         <div>
-          {/* Заголовок — снизу */}
+         
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ export const AboutScene = () => {
             {spacedText("Who We Are")}
           </motion.h2>
 
-          {/* Два столбца текста */}
+        
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
