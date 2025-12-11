@@ -13,14 +13,14 @@ interface Founder {
 const founders: Founder[] = [
   {
     name: "Oleksii Zarytskyi",
-    role: "Creative Developer",
-    quote: "Interfaces should feel engineered, not just decorated.",
+    role: "Full-Stack Developer",
+    quote: "The best UI is one you never think about.",
     image: oleksii,
   },
   {
     name: "Sofia Matuhkina",
     role: "Designer & Partner",
-    quote: "Strong work is where precision, structure and emotion meet.",
+    quote: "Design builds emotion; motion gives it a voice.",
     image: sofia,
   },
 ];
@@ -201,13 +201,13 @@ export const AboutScene = () => {
             </div>
             <div className="flex flex-col md:flex-row gap-4 md:gap-8">
               <a
-                href="#"
+                href="zarytskyi4444@gmail.com"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 hello@veldren.com
               </a>
               <a
-                href="#"
+                href="zarytskyi4444@gmail.com"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 info@veldren.com

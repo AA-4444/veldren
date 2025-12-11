@@ -86,7 +86,7 @@ export const WorksScene = () => {
   };
 
   const handleContactClick = () => {
-    window.location.href = "mailto:hello@veldren.com";
+    window.location.href = "mailto:zarytskyi4444@gmail.com";
   };
 
   return (
@@ -259,7 +259,7 @@ export const WorksScene = () => {
                   Contact us
                 </button>
                 <span className="text-[11px] md:text-xs text-muted-foreground self-center">
-                  or email directly — hello@veldren.com
+                  or email directly — zarytskyi4444@gmail.com
                 </span>
               </div>
             </motion.div>
