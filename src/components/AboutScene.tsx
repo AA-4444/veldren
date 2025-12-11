@@ -14,13 +14,13 @@ const founders: Founder[] = [
   {
     name: "Oleksii Zarytskyi",
     role: "Creative Developer",
-    quote: "We believe in precision and empathy in equal measure.",
+    quote: "Interfaces should feel engineered, not just decorated.",
     image: oleksii,
   },
   {
     name: "Sofia Matuhkina",
     role: "Producer & Partner",
-    quote: "Every detail matters — rhythm, type, proportion.",
+    quote: "Strong work is where precision, structure and emotion meet.",
     image: sofia,
   },
 ];
@@ -32,10 +32,10 @@ export const AboutScene = () => {
     <div
       className="
         relative w-full bg-background 
-        min-h-screen              /* mobile */
-        md:min-h-0 md:h-full      /* desktop под сцену */
+        min-h-screen              
+        md:min-h-0 md:h-full      
         overflow-visible 
-        md:overflow-y-auto        /* скролл только на desktop */
+        md:overflow-y-auto        
       "
     >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
@@ -49,7 +49,7 @@ export const AboutScene = () => {
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground leading-relaxed max-w-5xl text-spaced">
             {spacedText(
-              "What we make reflects our method; who we are shapes our intent."
+              "We design live digital systems where motion, structure and code stay in sync."
             )}
           </h2>
         </motion.div>
@@ -69,7 +69,7 @@ export const AboutScene = () => {
             {spacedText("Who We Are")}
           </motion.h2>
 
-          {/* Два столбца текста — тоже выезжают снизу */}
+          {/* Два столбца текста */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -79,9 +79,11 @@ export const AboutScene = () => {
           >
             <div>
               <p className="text-xl md:text-2xl text-foreground leading-relaxed">
-                We are a creative development studio shaping digital work where
-                clarity meets intensity — merging design, engineering, and
-                motion into experiences that feel alive.
+                VELDREN is a digital product and web studio focused on sharp,
+                motion-driven experiences. We design and build custom landing
+                pages, portfolio sites and e-commerce interfaces that feel
+                precise, fast and intentional — from the first frame to the last
+                line of code.
               </p>
             </div>
 
@@ -89,20 +91,22 @@ export const AboutScene = () => {
               <div>
                 <h3 className="text-label mb-4">Approach</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  We approach every project as a system — where clarity, rhythm,
-                  and motion define how ideas take shape. We design not just for
-                  screens, but for the way people feel and interact.
+                  We treat every project as a system — content, layout,
+                  animation and performance are designed together. Interfaces
+                  are stripped of noise, typography carries the tone, and motion
+                  reinforces structure instead of distracting from it.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mt-4">
-                  Our process blends conceptual thinking with technical
-                  precision, turning stories into digital experiences that live
-                  across time and media.
+                  Our work spans marketing sites, product pages and e-commerce
+                  flows, but the goal stays the same: build digital surfaces
+                  that load fast, feel premium and translate your brand into a
+                  clear, cohesive product experience.
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Founders — контейнер снизу */}
+          {/* Founders */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -154,7 +158,7 @@ export const AboutScene = () => {
             </div>
           </motion.div>
 
-          {/* Collaboration — снизу */}
+          {/* Collaboration */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -164,18 +168,21 @@ export const AboutScene = () => {
           >
             <h3 className="text-label mb-6">Collaboration</h3>
             <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-              We work with founders, cultural institutions and creative brands
-              to design digital systems with clarity and emotion.
+              We collaborate with founders, studios and brands that care about
+              how their product feels — not just how it looks. From early
+              concept and UX structure to final animations and deployment, we
+              stay close to the build, not just the slides.
             </p>
             <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed mt-4">
-              Whether you're building a new brand, rethinking your identity or
-              crafting your digital presence — we help translate vision into
-              form, movement and code.
+              Whether you need a launch-ready landing page, a long-living
+              marketing site or a tailored e-commerce experience, we help turn
+              your product story into a clear digital system — designed in Figma,
+              engineered in React, refined in motion.
             </p>
           </motion.div>
         </div>
 
-        {/* Footer — тоже лёгкий slide-up */}
+        {/* Footer */}
         <motion.footer
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
