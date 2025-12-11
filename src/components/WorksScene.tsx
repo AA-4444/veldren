@@ -7,6 +7,7 @@ import nikeVideo from "@/assets/nike.mp4";
 import avaImg from "@/assets/ava.png";
 import oleksiiVideo from "@/assets/oleksii.mov";
 import portfolioImg from "@/assets/portfolio.png";
+import studio from "@/assets/studio.png";
 
 interface WorkItem {
   id: number;
@@ -15,6 +16,7 @@ interface WorkItem {
   tags: string[];
   image?: string;
   video?: string;
+  link?: string;
 }
 
 const works: WorkItem[] = [
@@ -24,20 +26,23 @@ const works: WorkItem[] = [
     description: "Wengy is marketing agency website",
     tags: ["Motion Design", "Web Development"],
     video: wengyVideo,
+    link: "https://wengy-2.vercel.app", 
   },
   {
     id: 2,
     title: "Sping.tech",
-    description: "Sping.tech website for IT IGaming studio ",
-    tags: ["Web Developmetn"],
+    description: "Sping.tech website for IT IGaming studio",
+    tags: ["Web Development"],
     image: spingImg,
+    link: "https://www.sping.tech",
   },
   {
     id: 3,
     title: "Air 1000",
-    description: "Website inspired by niek pair air max 1000",
+    description: "Website inspired by Nike Air Max 1000",
     tags: ["Motion Design", "Web Development"],
     video: nikeVideo,
+    link: "https://air1000.vercel.app",
   },
   {
     id: 4,
@@ -45,6 +50,7 @@ const works: WorkItem[] = [
     description: "Real Estate Agency website",
     tags: ["Web Development"],
     image: avaImg,
+    link: "http://www.ava100.com.ua",
   },
   {
     id: 5,
@@ -52,6 +58,7 @@ const works: WorkItem[] = [
     description: "Portfolio website created with Next.js and Framer Motion.",
     tags: ["Web Development", "Motion Design"],
     video: oleksiiVideo,
+    link: "#",
   },
   {
     id: 6,
@@ -59,9 +66,17 @@ const works: WorkItem[] = [
     description: "Portfolio design.",
     tags: ["Design", "Figma"],
     image: portfolioImg,
+    link: "#",
+  },
+  {
+    id: 7,
+    title: "Digital Studio",
+    description: "Studio concept website.",
+    tags: ["Web Development", "Motion Design"],
+    image: studio,
+    link: "https://studi0.vercel.app",
   },
 ];
-
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const TITLE_WORDS = ["Selected", "Works"];
@@ -83,15 +98,16 @@ const titleWordVariants = {
     opacity: 0,
     transformPerspective: 800,
   },
-  visible: {
+  visible: (index: number) => ({
     y: "0%",
     rotateX: 0,
     opacity: 1,
     transition: {
       duration: 1.0,
+      delay: index * 0.12,
       ease: EASE,
     },
-  },
+  }),
 };
 
 export const WorksScene = () => {
@@ -119,6 +135,11 @@ export const WorksScene = () => {
     window.location.href = "mailto:zarytskyi4444@gmail.com";
   };
 
+  const handleCardClick = (work: WorkItem) => {
+    if (!work.link) return;
+    window.open(work.link, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div
       className="
@@ -130,20 +151,21 @@ export const WorksScene = () => {
       "
     >
       <div className="container mx-auto px-4 md:px-12 py-8 md:py-24">
-        {/* divider */}
         <div className="border-t border-border mb-6 md:mb-12" />
 
-       
+        
         <motion.div
           variants={titleContainerVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.6 }}
           className="mb-6 md:mb-20"
         >
           {TITLE_WORDS.map((word, index) => (
             <div key={index} className="overflow-hidden inline-block mr-2">
               <motion.span
                 variants={titleWordVariants}
+                custom={index}
                 className="
                   text-[13vw] md:text-[10vw] 
                   leading-none font-black tracking-tight 
@@ -156,12 +178,12 @@ export const WorksScene = () => {
           ))}
         </motion.div>
 
-        {/* grid */}
+        {/* GRID */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-2 gap-10"
         >
           {works.map((work) => (
@@ -171,8 +193,8 @@ export const WorksScene = () => {
               className="relative group cursor-pointer overflow-hidden rounded-xl bg-card"
               onMouseEnter={() => setHoveredId(work.id)}
               onMouseLeave={() => setHoveredId(null)}
+              onClick={() => handleCardClick(work)}
             >
-              {/* media */}
               <div className="relative w-full overflow-hidden aspect-[4/3] md:aspect-auto">
                 {work.video ? (
                   <motion.video
@@ -196,14 +218,6 @@ export const WorksScene = () => {
                         video.play().catch(() => {});
                       }
                     }}
-                    onClick={(e) => {
-                      const video = e.currentTarget;
-                      if (video.paused) {
-                        video.play().catch(() => {});
-                      } else {
-                        video.pause();
-                      }
-                    }}
                   />
                 ) : (
                   work.image && (
@@ -223,7 +237,6 @@ export const WorksScene = () => {
                 )}
               </div>
 
-              {/* tags */}
               <div className="absolute top-2 left-2 md:top-4 md:left-4 flex flex-wrap gap-2 z-20">
                 {work.tags.map((tag) => (
                   <span
@@ -235,7 +248,6 @@ export const WorksScene = () => {
                 ))}
               </div>
 
-              {/* bottom info */}
               <div className="absolute left-0 right-0 bottom-0 z-20 bg-black/55 backdrop-blur-sm px-3 py-2 md:px-4 md:py-3">
                 <h3 className="text-xs md:text-sm font-semibold text-white">
                   {work.title}
@@ -248,11 +260,11 @@ export const WorksScene = () => {
           ))}
         </motion.div>
 
-        {/* button */}
+        {/* BUTTON */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.4 }}
           transition={{ delay: 0.3 }}
           className="mt-6 md:mt-16 text-center"
         >
@@ -264,7 +276,7 @@ export const WorksScene = () => {
           </button>
         </motion.div>
 
-        {/* panel */}
+        {/* PANEL */}
         <AnimatePresence>
           {showPanel && (
             <motion.div
