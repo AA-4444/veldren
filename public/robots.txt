@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow system & build files 
+Disallow: /dist/
+Disallow: /build/
+Disallow: /node_modules/
+
+
