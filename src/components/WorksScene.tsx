@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-
 import wengyVideo from "@/assets/wengy.mp4";
 import spingImg from "@/assets/sping.png";
 import nikeVideo from "@/assets/nike.mp4";
@@ -45,7 +44,7 @@ const works: WorkItem[] = [
     id: 4,
     title: "Ava 100",
     description:
-      "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow. ",
+      "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow.",
     tags: ["Motion Design", "Art Direction"],
     image: avaImg,
   },
@@ -127,6 +126,7 @@ export const WorksScene = () => {
                     muted
                     loop
                     playsInline
+                    preload="metadata"
                     className="block w-full h-auto object-cover"
                     animate={{
                       scale: hoveredId === work.id ? 1.03 : 1,
@@ -134,6 +134,20 @@ export const WorksScene = () => {
                     transition={{
                       duration: 0.6,
                       ease: [0.22, 1, 0.36, 1],
+                    }}
+                    onLoadedMetadata={(e) => {
+                      const video = e.currentTarget;
+                      if (video.paused) {
+                        video.play().catch(() => {});
+                      }
+                    }}
+                    onClick={(e) => {
+                      const video = e.currentTarget;
+                      if (video.paused) {
+                        video.play().catch(() => {});
+                      } else {
+                        video.pause();
+                      }
                     }}
                   />
                 ) : (
