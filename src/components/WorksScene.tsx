@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-import wengyVideo from "@/assets/wengy.mp4";
+import wengyVideo from "@/assets/wengy.mov";
 import spingImg from "@/assets/sping.png";
 import nikeVideo from "@/assets/nike.mp4";
 import avaImg from "@/assets/ava.png";
