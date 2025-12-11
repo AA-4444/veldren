@@ -15,7 +15,6 @@ const titleWords = [
   "Interfaces.",
 ];
 
-
 const containerVariants = {
   hidden: {},
   visible: {
@@ -69,13 +68,12 @@ export const MissionScene = () => {
       "
     >
       <div className="container mx-auto px-6 md:px-12 py-20 md:py-0">
-        {/* ВЕСЬ контент управляется одним initial/animate */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
         >
-          {/* ---------- TITLE (по словам) ---------- */}
           <div className="mb-12 md:mb-24">
             {titleWords.map((word, index) => (
               <div key={index} className="overflow-hidden inline-block mr-2">
@@ -98,9 +96,7 @@ export const MissionScene = () => {
             ))}
           </div>
 
-          {/* ---------- TWO COLUMNS ---------- */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24">
-            {/* left */}
             <motion.div variants={blockVariants}>
               <h3 className="text-label mb-4">Mission</h3>
               <p className="text-lg md:text-xl leading-relaxed text-foreground">
@@ -110,7 +106,6 @@ export const MissionScene = () => {
               </p>
             </motion.div>
 
-            {/* right */}
             <motion.div variants={blockVariants}>
               <h3 className="text-label mb-4">Goal</h3>
               <p className="text-base md:text-lg leading-relaxed text-muted-foreground">

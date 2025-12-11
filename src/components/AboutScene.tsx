@@ -46,7 +46,7 @@ export const AboutScene = () => {
   const spacedText = (text: string) => text.split("").join("  ");
 
   return (
-    <motion.div
+    <div
       className="
         relative w-full bg-background 
         min-h-screen              
@@ -54,26 +54,39 @@ export const AboutScene = () => {
         overflow-visible 
         md:overflow-y-auto        
       "
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
     >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
-        <motion.div variants={itemVariants} className="mb-24">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground leading-relaxed max-w-5xl text-spaced">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="mb-24"
+        >
+          <motion.h2
+            variants={itemVariants}
+            className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground leading-relaxed max-w-5xl text-spaced"
+          >
             {spacedText(
               "We design live digital systems where motion, structure and code stay in sync."
             )}
-          </h2>
+          </motion.h2>
         </motion.div>
 
         <motion.div
           variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           className="border-t border-border mb-16"
         />
 
-        <div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           <motion.h2
             variants={itemVariants}
             className="text-section-title text-foreground mb-12 text-spaced"
@@ -113,66 +126,84 @@ export const AboutScene = () => {
               </div>
             </div>
           </motion.div>
+        </motion.div>
 
-          <motion.div variants={itemVariants}>
-            <h3 className="text-label mb-8">Founders</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {founders.map((founder, index) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="mt-8"
+        >
+          <motion.h3 variants={itemVariants} className="text-label mb-8">
+            Founders
+          </motion.h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {founders.map((founder, index) => (
+              <motion.div
+                key={founder.name}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.25 }}
+                variants={itemVariants}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.1 + index * 0.1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
                 <motion.div
-                  key={founder.name}
+                  className="relative overflow-hidden mb-6 aspect-[4/5]"
                   variants={itemVariants}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.2 + index * 0.1,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
                 >
-                  <motion.div
-                    className="relative overflow-hidden mb-6 aspect-[4/5]"
-                    variants={itemVariants}
-                  >
-                    <img
-                      src={founder.image}
-                      alt={founder.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
-                  <h4 className="text-lg font-medium text-foreground mb-1">
-                    {founder.name}
-                  </h4>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {founder.role}
-                  </p>
-                  <p className="text-sm text-muted-foreground italic">
-                    "{founder.quote}"
-                  </p>
+                  <img
+                    src={founder.image}
+                    alt={founder.name}
+                    className="w-full h-full object-cover"
+                  />
                 </motion.div>
-              ))}
-            </div>
-          </motion.div>
+                <h4 className="text-lg font-medium text-foreground mb-1">
+                  {founder.name}
+                </h4>
+                <p className="text-sm text-muted-foreground mb-3">
+                  {founder.role}
+                </p>
+                <p className="text-sm text-muted-foreground italic">
+                  "{founder.quote}"
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
-          <motion.div
-            variants={itemVariants}
-            className="mt-24"
-          >
-            <h3 className="text-label mb-6">Collaboration</h3>
-            <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-              We collaborate with founders, studios and brands that care about
-              how their product feels — not just how it looks. From early
-              concept and UX structure to final animations and deployment, we
-              stay close to the build, not just the slides.
-            </p>
-            <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed mt-4">
-              Whether you need a launch-ready landing page, a long-living
-              marketing site or a tailored e-commerce experience, we help turn
-              your product story into a clear digital system — designed in Figma,
-              engineered in React, refined in motion.
-            </p>
-          </motion.div>
-        </div>
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="mt-24"
+        >
+          <h3 className="text-label mb-6">Collaboration</h3>
+          <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+            We collaborate with founders, studios and brands that care about
+            how their product feels — not just how it looks. From early
+            concept and UX structure to final animations and deployment, we
+            stay close to the build, not just the slides.
+          </p>
+          <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed mt-4">
+            Whether you need a launch-ready landing page, a long-living
+            marketing site or a tailored e-commerce experience, we help turn
+            your product story into a clear digital system — designed in Figma,
+            engineered in React, refined in motion.
+          </p>
+        </motion.div>
 
         <motion.footer
           variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           className="mt-32 pt-8 border-t border-border"
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
@@ -209,6 +240,6 @@ export const AboutScene = () => {
           </div>
         </motion.footer>
       </div>
-    </motion.div>
+    </div>
   );
 };
