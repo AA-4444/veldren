@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-import wengyVideo from "@/assets/wengy.mp4";
+import wengyVideo from "@/assets/wengy.mov";
 import spingImg from "@/assets/sping.png";
 import nikeVideo from "@/assets/nike.mp4";
 import avaImg from "@/assets/ava.png";
-import oleksiiVideo from "@/assets/oleksii.mp4";
+import oleksiiVideo from "@/assets/oleksii.mov";
 import portfolioImg from "@/assets/portfolio.png";
 
 interface WorkItem {
@@ -88,10 +88,10 @@ export const WorksScene = () => {
     <div
       className="
         relative w-full bg-background 
-        min-h-screen              /* mobile: секция не меньше экрана */
-        md:min-h-0 md:h-full      /* desktop: под высоту сцены ScrollScenes */
+        min-h-screen             
+        md:min-h-0 md:h-full      
         overflow-visible 
-        md:overflow-y-auto        /* ВАЖНО: внутренний скролл ТОЛЬКО на десктопе */
+        md:overflow-y-auto        
       "
     >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
