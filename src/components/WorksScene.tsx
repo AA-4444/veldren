@@ -44,7 +44,7 @@ const works: WorkItem[] = [
     id: 4,
     title: "Ava 100",
     description:
-      "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow. ",
+      "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow.",
     tags: ["Motion Design", "Art Direction"],
     image: avaImg,
   },
@@ -85,7 +85,15 @@ export const WorksScene = () => {
   };
 
   return (
-    <div className="relative h-full w-full bg-background overflow-y-auto">
+    <div
+      className="
+        relative w-full bg-background 
+        min-h-screen              /* mobile: секция не меньше экрана */
+        md:min-h-0 md:h-full      /* desktop: под высоту сцены ScrollScenes */
+        overflow-visible 
+        md:overflow-y-auto        /* ВАЖНО: внутренний скролл ТОЛЬКО на десктопе */
+      "
+    >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
         {/* divider */}
         <div className="border-t border-border mb-12" />

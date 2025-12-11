@@ -28,32 +28,23 @@ const founders: Founder[] = [
 export const AboutScene = () => {
   const spacedText = (text: string) => text.split("").join("  ");
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
-
   return (
-    <div className="relative h-full w-full bg-background overflow-y-auto">
+    <div
+      className="
+        relative w-full bg-background 
+        min-h-screen              /* mobile */
+        md:min-h-0 md:h-full      /* desktop под сцену */
+        overflow-visible 
+        md:overflow-y-auto        /* скролл только на desktop */
+      "
+    >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
-        {/* Quote */}
+        {/* Quote — плавно снизу */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="mb-24"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground leading-relaxed max-w-5xl text-spaced">
@@ -65,30 +56,36 @@ export const AboutScene = () => {
 
         <div className="border-t border-border mb-16" />
 
-        {/* Who We Are */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        {/* WHO WE ARE блок */}
+        <div>
+          {/* Заголовок — снизу */}
           <motion.h2
-            variants={itemVariants}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
             className="text-section-title text-foreground mb-12 text-spaced"
           >
             {spacedText("Who We Are")}
           </motion.h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
-            <motion.div variants={itemVariants}>
+          {/* Два столбца текста — тоже выезжают снизу */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24"
+          >
+            <div>
               <p className="text-xl md:text-2xl text-foreground leading-relaxed">
                 We are a creative development studio shaping digital work where
                 clarity meets intensity — merging design, engineering, and
                 motion into experiences that feel alive.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div variants={itemVariants} className="space-y-8">
+            <div className="space-y-8">
               <div>
                 <h3 className="text-label mb-4">Approach</h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -102,22 +99,47 @@ export const AboutScene = () => {
                   across time and media.
                 </p>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
 
-          {/* Founders */}
-          <motion.div variants={itemVariants}>
+          {/* Founders — контейнер снизу */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+          >
             <h3 className="text-label mb-8">Founders</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {founders.map((founder) => (
-                <motion.div key={founder.name} variants={itemVariants}>
-                  <div className="relative overflow-hidden mb-6 aspect-[4/5]">
+              {founders.map((founder, index) => (
+                <motion.div
+                  key={founder.name}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.2 + index * 0.1,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  <motion.div
+                    className="relative overflow-hidden mb-6 aspect-[4/5]"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{
+                      duration: 0.7,
+                      delay: 0.2 + index * 0.1,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
                     <img
                       src={founder.image}
                       alt={founder.name}
                       className="w-full h-full object-cover"
                     />
-                  </div>
+                  </motion.div>
                   <h4 className="text-lg font-medium text-foreground mb-1">
                     {founder.name}
                   </h4>
@@ -132,8 +154,14 @@ export const AboutScene = () => {
             </div>
           </motion.div>
 
-          {/* Collaboration */}
-          <motion.div variants={itemVariants} className="mt-24">
+          {/* Collaboration — снизу */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-24"
+          >
             <h3 className="text-label mb-6">Collaboration</h3>
             <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
               We work with founders, cultural institutions and creative brands
@@ -145,14 +173,14 @@ export const AboutScene = () => {
               form, movement and code.
             </p>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Footer */}
+        {/* Footer — тоже лёгкий slide-up */}
         <motion.footer
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="mt-32 pt-8 border-t border-border"
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
@@ -165,7 +193,6 @@ export const AboutScene = () => {
               </p>
             </div>
             <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-            
               <a
                 href="#"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"

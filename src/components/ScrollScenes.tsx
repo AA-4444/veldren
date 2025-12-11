@@ -86,39 +86,17 @@ const Scene = ({ children, index, total, scrollYProgress }: SceneProps) => {
   );
 };
 
-export const ScrollScenes = ({ children }: ScrollScenesProps) => {
+const ScrollScenesCore = ({
+  children,
+  heightMultiplier = 1,
+}: {
+  children: ReactNode;
+  heightMultiplier?: number;
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const childArray = Children.toArray(children);
   const total = childArray.length;
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => {
-      if (typeof window !== "undefined") {
-        setIsMobile(window.innerWidth < 768);
-      }
-    };
-
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-
-  if (isMobile) {
-    return (
-      <div ref={containerRef} className="relative">
-        {childArray.map((child, index) => (
-          <div key={index} className="min-h-screen w-full">
-            {child}
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -127,7 +105,7 @@ export const ScrollScenes = ({ children }: ScrollScenesProps) => {
   return (
     <div
       ref={containerRef}
-      style={{ height: `${total * 100}vh` }}
+      style={{ height: `${total * 100 * heightMultiplier}vh` }}
       className="relative"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
@@ -144,4 +122,56 @@ export const ScrollScenes = ({ children }: ScrollScenesProps) => {
       </div>
     </div>
   );
+};
+
+export const ScrollScenes = ({ children }: ScrollScenesProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      if (typeof window !== "undefined") {
+        setIsMobile(window.innerWidth < 768);
+      }
+    };
+
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const childArray = Children.toArray(children);
+
+  // Индекс WorksScene:
+  // 0: HeroScene
+  // 1: MissionScene
+  // 2: WorksScene
+  // 3: ServicesScene
+  // 4: AboutScene
+  const WORKS_INDEX = 2;
+
+  if (isMobile) {
+    const beforeWorks = childArray.slice(0, WORKS_INDEX); // Hero, Mission
+    const fromWorks = childArray.slice(WORKS_INDEX);      // Works и всё после
+
+    return (
+      <>
+        {/* первые сцены со ScrollScenes */}
+        <ScrollScenesCore heightMultiplier={1.3}>
+          {beforeWorks}
+        </ScrollScenesCore>
+
+        {/* Works + Services + About — обычный скролл */}
+        <div className="w-full bg-background">
+          {fromWorks.map((child, idx) => (
+            <div key={idx} className="w-full">
+              {child}
+            </div>
+          ))}
+        </div>
+      </>
+    );
+  }
+
+  // десктоп — ровно как раньше: ВСЁ в ScrollScenes, multiplier = 1
+  return <ScrollScenesCore heightMultiplier={1}>{children}</ScrollScenesCore>;
 };
