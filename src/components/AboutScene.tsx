@@ -25,11 +25,28 @@ const founders: Founder[] = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.05 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export const AboutScene = () => {
   const spacedText = (text: string) => text.split("").join("  ");
 
   return (
-    <div
+    <motion.div
       className="
         relative w-full bg-background 
         min-h-screen              
@@ -37,16 +54,13 @@ export const AboutScene = () => {
         overflow-visible 
         md:overflow-y-auto        
       "
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
     >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
-        {/* Quote  */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-24"
-        >
+        <motion.div variants={itemVariants} className="mb-24">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground leading-relaxed max-w-5xl text-spaced">
             {spacedText(
               "We design live digital systems where motion, structure and code stay in sync."
@@ -54,27 +68,21 @@ export const AboutScene = () => {
           </h2>
         </motion.div>
 
-        <div className="border-t border-border mb-16" />
+        <motion.div
+          variants={itemVariants}
+          className="border-t border-border mb-16"
+        />
 
-        {/* WHO WE ARE  */}
         <div>
-         
           <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            variants={itemVariants}
             className="text-section-title text-foreground mb-12 text-spaced"
           >
             {spacedText("Who We Are")}
           </motion.h2>
 
-        
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            variants={itemVariants}
             className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24"
           >
             <div>
@@ -106,21 +114,13 @@ export const AboutScene = () => {
             </div>
           </motion.div>
 
-          {/* Founders */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <motion.div variants={itemVariants}>
             <h3 className="text-label mb-8">Founders</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {founders.map((founder, index) => (
                 <motion.div
                   key={founder.name}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
+                  variants={itemVariants}
                   transition={{
                     duration: 0.7,
                     delay: 0.2 + index * 0.1,
@@ -129,14 +129,7 @@ export const AboutScene = () => {
                 >
                   <motion.div
                     className="relative overflow-hidden mb-6 aspect-[4/5]"
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{
-                      duration: 0.7,
-                      delay: 0.2 + index * 0.1,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
+                    variants={itemVariants}
                   >
                     <img
                       src={founder.image}
@@ -158,12 +151,8 @@ export const AboutScene = () => {
             </div>
           </motion.div>
 
-          {/* Collaboration */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            variants={itemVariants}
             className="mt-24"
           >
             <h3 className="text-label mb-6">Collaboration</h3>
@@ -182,12 +171,8 @@ export const AboutScene = () => {
           </motion.div>
         </div>
 
-        {/* Footer */}
         <motion.footer
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          variants={itemVariants}
           className="mt-32 pt-8 border-t border-border"
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
@@ -201,13 +186,13 @@ export const AboutScene = () => {
             </div>
             <div className="flex flex-col md:flex-row gap-4 md:gap-8">
               <a
-                href="zarytskyi4444@gmail.com"
+                href="mailto:hello@veldren.com"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 hello@veldren.com
               </a>
               <a
-                href="zarytskyi4444@gmail.com"
+                href="mailto:info@veldren.com"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 info@veldren.com
@@ -224,6 +209,6 @@ export const AboutScene = () => {
           </div>
         </motion.footer>
       </div>
-    </div>
+    </motion.div>
   );
 };

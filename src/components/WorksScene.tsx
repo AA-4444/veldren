@@ -28,8 +28,7 @@ const works: WorkItem[] = [
   {
     id: 2,
     title: "Sping.tech",
-    description:
-      "Sping.tech website for IT IGaming studio ",
+    description: "Sping.tech website for IT IGaming studio ",
     tags: ["Web Developmetn"],
     image: spingImg,
   },
@@ -62,6 +61,38 @@ const works: WorkItem[] = [
     image: portfolioImg,
   },
 ];
+
+
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const TITLE_WORDS = ["Selected", "Works"];
+
+const titleContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const titleWordVariants = {
+  hidden: {
+    y: "100%",
+    rotateX: -80,
+    opacity: 0,
+    transformPerspective: 800,
+  },
+  visible: {
+    y: "0%",
+    rotateX: 0,
+    opacity: 1,
+    transition: {
+      duration: 1.0,
+      ease: EASE,
+    },
+  },
+};
 
 export const WorksScene = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -102,16 +133,28 @@ export const WorksScene = () => {
         {/* divider */}
         <div className="border-t border-border mb-6 md:mb-12" />
 
-        {/* title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-[13vw] md:text-[10vw] leading-none font-black tracking-tight text-foreground mb-6 md:mb-20"
+       
+        <motion.div
+          variants={titleContainerVariants}
+          initial="hidden"
+          animate="visible"
+          className="mb-6 md:mb-20"
         >
-          Selected Works
-        </motion.h2>
+          {TITLE_WORDS.map((word, index) => (
+            <div key={index} className="overflow-hidden inline-block mr-2">
+              <motion.span
+                variants={titleWordVariants}
+                className="
+                  text-[13vw] md:text-[10vw] 
+                  leading-none font-black tracking-tight 
+                  text-foreground inline-block
+                "
+              >
+                {word}
+              </motion.span>
+            </div>
+          ))}
+        </motion.div>
 
         {/* grid */}
         <motion.div
@@ -207,10 +250,10 @@ export const WorksScene = () => {
 
         {/* button */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.3 }}
           className="mt-6 md:mt-16 text-center"
         >
           <button

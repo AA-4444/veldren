@@ -207,6 +207,38 @@ const services: Service[] = [
   },
 ];
 
+
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const TITLE_WORDS = ["What", "We", "Do"];
+
+const titleContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const titleWordVariants = {
+  hidden: {
+    y: "100%",
+    rotateX: -80,
+    opacity: 0,
+    transformPerspective: 800,
+  },
+  visible: {
+    y: "0%",
+    rotateX: 0,
+    opacity: 1,
+    transition: {
+      duration: 1.0,
+      ease: EASE,
+    },
+  },
+};
+
 export const ServicesScene = () => {
   const [openId, setOpenId] = useState<string | null>(null);
 
@@ -220,21 +252,36 @@ export const ServicesScene = () => {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="px-6 md:px-10 lg:px-16 pt-16 md:pt-24 pb-12">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="text-[16vw] md:text-[7vw] leading-none font-black text-foreground mb-8"
+          {/* word-by-word TITLE */}
+          <motion.div
+            variants={titleContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            className="mb-8"
           >
-            What We Do
-          </motion.h2>
+            {TITLE_WORDS.map((word, index) => (
+              <div key={index} className="overflow-hidden inline-block mr-3">
+                <motion.span
+                  variants={titleWordVariants}
+                  className="
+                    text-[16vw] md:text-[7vw] 
+                    leading-none font-black 
+                    text-foreground inline-block
+                  "
+                >
+                  {word}
+                </motion.span>
+              </div>
+            ))}
+          </motion.div>
 
+          
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, delay: 0.25 }}
             className="text-sm md:text-base lg:text-lg text-muted-foreground max-w-3xl leading-relaxed"
           >
             We design and build expressive websites — from cinematic landing
