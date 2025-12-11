@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 
+import oleksii from "@/assets/2.png";
+import sofia from "@/assets/1.png";
+
 interface Founder {
   name: string;
   role: string;
@@ -12,13 +15,13 @@ const founders: Founder[] = [
     name: "Oleksii Zarytskyi",
     role: "Creative Developer",
     quote: "We believe in precision and empathy in equal measure.",
-    image: "src/assets/2.png",
+    image: oleksii,
   },
   {
     name: "Sofia Matuhkina",
     role: "Producer & Partner",
     quote: "Every detail matters — rhythm, type, proportion.",
-    image: "src/assets/1.png",
+    image: sofia,
   },
 ];
 
