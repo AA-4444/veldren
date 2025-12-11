@@ -43,8 +43,7 @@ const works: WorkItem[] = [
   {
     id: 4,
     title: "Ava 100",
-    description:
-      "Real Estate Agency website"",
+    description: "Real Estate Agency website",
     tags: ["Web Development"],
     image: avaImg,
   },
