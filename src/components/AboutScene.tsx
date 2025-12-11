@@ -56,6 +56,8 @@ export const AboutScene = () => {
       "
     >
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
+
+        {/* Intro text */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -73,6 +75,7 @@ export const AboutScene = () => {
           </motion.h2>
         </motion.div>
 
+        {/* Divider */}
         <motion.div
           variants={itemVariants}
           initial="hidden"
@@ -81,6 +84,7 @@ export const AboutScene = () => {
           className="border-t border-border mb-16"
         />
 
+        {/* Who we are */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -128,6 +132,7 @@ export const AboutScene = () => {
           </motion.div>
         </motion.div>
 
+        {/* Founders */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -163,6 +168,7 @@ export const AboutScene = () => {
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
+
                 <h4 className="text-lg font-medium text-foreground mb-1">
                   {founder.name}
                 </h4>
@@ -177,6 +183,7 @@ export const AboutScene = () => {
           </div>
         </motion.div>
 
+        {/* Collaboration */}
         <motion.div
           variants={itemVariants}
           initial="hidden"
@@ -187,18 +194,40 @@ export const AboutScene = () => {
           <h3 className="text-label mb-6">Collaboration</h3>
           <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
             We collaborate with founders, studios and brands that care about
-            how their product feels — not just how it looks. From early
-            concept and UX structure to final animations and deployment, we
-            stay close to the build, not just the slides.
+            how their product feels — not just how it looks.
           </p>
+
           <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed mt-4">
-            Whether you need a launch-ready landing page, a long-living
-            marketing site or a tailored e-commerce experience, we help turn
-            your product story into a clear digital system — designed in Figma,
-            engineered in React, refined in motion.
+            Whether you need a launch-ready landing page or a full digital system,
+            we help turn your story into a clear, modern, structured experience.
           </p>
         </motion.div>
 
+        {/* CONTACT BUTTON (добавлено здесь) */}
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="mt-12"
+        >
+          <button
+            onClick={() => (window.location.href = "mailto:zarytskyi4444@gmail.com")}
+            className="
+              px-8 py-4 
+              border border-foreground 
+              text-foreground 
+              text-xs md:text-sm 
+              uppercase tracking-[0.2em]
+              hover:bg-foreground hover:text-background
+              transition-all duration-300
+            "
+          >
+            Contact Us
+          </button>
+        </motion.div>
+
+        {/* Footer */}
         <motion.footer
           variants={itemVariants}
           initial="hidden"
@@ -215,6 +244,7 @@ export const AboutScene = () => {
                 © 2024 All rights reserved
               </p>
             </div>
+
             <div className="flex flex-col md:flex-row gap-4 md:gap-8">
               <a
                 href="mailto:hello@veldren.com"
@@ -222,12 +252,14 @@ export const AboutScene = () => {
               >
                 hello@veldren.com
               </a>
+
               <a
                 href="mailto:info@veldren.com"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 info@veldren.com
               </a>
+
               <a
                 href="https://t.me/uu_4444"
                 target="_blank"
