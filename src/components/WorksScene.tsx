@@ -21,31 +21,31 @@ const works: WorkItem[] = [
   {
     id: 1,
     title: "Wengy",
-    description: "Overmono is a visual experiment inspired by the duo's raw",
-    tags: ["Motion Design", "Art Direction"],
+    description: "Wengy is marketing agency website",
+    tags: ["Motion Design", "Web Development"],
     video: wengyVideo,
   },
   {
     id: 2,
     title: "Sping.tech",
     description:
-      "Likorn is a digital study exploring organic motion and sculptural forms.",
-    tags: ["Motion Design", "Art Direction"],
+      "Sping.tech website for IT IGaming studio ",
+    tags: ["Web Developmetn"],
     image: spingImg,
   },
   {
     id: 3,
     title: "Air 1000",
-    description: "Solo Model is a stripped-down visual study focused on presence",
-    tags: ["Motion Design", "Art Direction"],
+    description: "Website inspired by niek pair air max 1000",
+    tags: ["Motion Design", "Web Development"],
     video: nikeVideo,
   },
   {
     id: 4,
     title: "Ava 100",
     description:
-      "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow.",
-    tags: ["Motion Design", "Art Direction"],
+      "Real Estate Agency website"",
+    tags: ["Web Development"],
     image: avaImg,
   },
   {
