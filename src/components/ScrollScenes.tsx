@@ -1,5 +1,16 @@
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { useRef, ReactNode, Children, useEffect, useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  MotionValue,
+} from "framer-motion";
+import {
+  useRef,
+  ReactNode,
+  Children,
+  useEffect,
+  useState,
+} from "react";
 
 interface ScrollScenesProps {
   children: ReactNode;
@@ -80,32 +91,43 @@ export const ScrollScenes = ({ children }: ScrollScenesProps) => {
   const childArray = Children.toArray(children);
   const total = childArray.length;
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      if (typeof window !== "undefined") {
+        setIsMobile(window.innerWidth < 768);
+      }
+    };
+
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+
+  if (isMobile) {
+    return (
+      <div ref={containerRef} className="relative">
+        {childArray.map((child, index) => (
+          <div key={index} className="min-h-screen w-full">
+            {child}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  
-  const [heightMultiplier, setHeightMultiplier] = useState(1.1);
-
-  useEffect(() => {
-    const updateMultiplier = () => {
-      if (window.innerWidth < 768) {
-        setHeightMultiplier(1.6);
-      } else {
-        setHeightMultiplier(1.1); 
-      }
-    };
-
-    updateMultiplier();
-    window.addEventListener("resize", updateMultiplier);
-    return () => window.removeEventListener("resize", updateMultiplier);
-  }, []);
-
   return (
     <div
       ref={containerRef}
-      style={{ height: `${total * 100 * heightMultiplier}vh` }}
+      style={{ height: `${total * 100}vh` }}
       className="relative"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">

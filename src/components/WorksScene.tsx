@@ -44,7 +44,7 @@ const works: WorkItem[] = [
     id: 4,
     title: "Ava 100",
     description:
-      "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow.",
+      "Ethereal Skiing is a visual experiment capturing the weightlessness and speed of movement on snow. ",
     tags: ["Motion Design", "Art Direction"],
     image: avaImg,
   },
@@ -87,10 +87,10 @@ export const WorksScene = () => {
   return (
     <div className="relative h-full w-full bg-background overflow-y-auto">
       <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
-        {/* Section divider */}
+        {/* divider */}
         <div className="border-t border-border mb-12" />
 
-        {/* Section title */}
+        {/* title */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -101,7 +101,7 @@ export const WorksScene = () => {
           Selected Works
         </motion.h2>
 
-        {/* Works grid */}
+        {/* grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -193,7 +193,7 @@ export const WorksScene = () => {
           ))}
         </motion.div>
 
-        {/* View All button */}
+        {/* button */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
