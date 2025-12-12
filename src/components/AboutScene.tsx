@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 
 import oleksii from "@/assets/2.png";
 import sofia from "@/assets/1.png";
+import borislav from "@/assets/borislav.png";
+import { Link } from "react-router-dom";
 
 interface Founder {
   name: string;
@@ -10,54 +12,74 @@ interface Founder {
   image: string;
 }
 
-const founders: Founder[] = [
-  {
-    name: "Oleksii Zarytskyi",
-    role: "Full-Stack Developer",
-    quote: "The best UI is one you never think about.",
-    image: oleksii,
-  },
-  {
-    name: "Sofia Matuhkina",
-    role: "Designer & Partner",
-    quote: "Design builds emotion; motion gives it a voice.",
-    image: sofia,
-  },
-];
+type SceneId = "home" | "mission" | "works" | "services" | "about";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.05 },
-  },
-};
+export const AboutScene = ({
+  scrollToScene,
+}: {
+  scrollToScene?: (id: SceneId) => void;
+}) => {
+  const founders: Founder[] = [
+    {
+      name: "Oleksii Zarytskyi",
+      role: "Founder,Full-Stack Developer",
+      quote: "The best UI is one you never think about.",
+      image: oleksii,
+    },
+    {
+      name: "Sofia Matuhkina",
+      role: "Designer & Partner",
+      quote: "Design builds emotion; motion gives it a voice.",
+      image: sofia,
+    },
+    {
+      name: "Boryslav Kyselov",
+      role: "CEO",
+      quote: "Design builds emotion; motion gives it a voice.",
+      image: borislav,
+    },
+  ];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.05 },
+    },
+  };
 
-export const AboutScene = () => {
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   const spacedText = (text: string) => text.split("").join("  ");
+
+  const navItems: { label: string; id: SceneId }[] = [
+    { label: "Home", id: "home" },
+    { label: "Mission", id: "mission" },
+    { label: "Works", id: "works" },
+    { label: "Services", id: "services" },
+    { label: "About", id: "about" },
+  ];
 
   return (
     <div
+      id="about"
       className="
-        relative w-full bg-background 
-        min-h-screen              
-        md:min-h-0 md:h-full      
-        overflow-visible 
-        md:overflow-y-auto        
+        relative w-full bg-background
+        min-h-screen
+        md:min-h-0 md:h-full
+        overflow-visible
+        md:overflow-y-auto
+        flex flex-col
       "
     >
-      <div className="container mx-auto px-6 md:px-12 py-16 md:py-24">
-
-        {/* Intro text */}
+      <div className="container mx-auto px-6 md:px-12 py-16 md:py-24 flex-1">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -75,7 +97,6 @@ export const AboutScene = () => {
           </motion.h2>
         </motion.div>
 
-        {/* Divider */}
         <motion.div
           variants={itemVariants}
           initial="hidden"
@@ -84,7 +105,6 @@ export const AboutScene = () => {
           className="border-t border-border mb-16"
         />
 
-        {/* Who we are */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -116,10 +136,10 @@ export const AboutScene = () => {
               <div>
                 <h3 className="text-label mb-4">Approach</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  We treat every project as a system — content, layout,
-                  animation and performance are designed together. Interfaces
-                  are stripped of noise, typography carries the tone, and motion
-                  reinforces structure instead of distracting from it.
+                  We treat every project as a system — content, layout, animation
+                  and performance are designed together. Interfaces are stripped
+                  of noise, typography carries the tone, and motion reinforces
+                  structure instead of distracting from it.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mt-4">
                   Our work spans marketing sites, product pages and e-commerce
@@ -132,7 +152,6 @@ export const AboutScene = () => {
           </motion.div>
         </motion.div>
 
-        {/* Founders */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -183,7 +202,6 @@ export const AboutScene = () => {
           </div>
         </motion.div>
 
-        {/* Collaboration */}
         <motion.div
           variants={itemVariants}
           initial="hidden"
@@ -193,17 +211,17 @@ export const AboutScene = () => {
         >
           <h3 className="text-label mb-6">Collaboration</h3>
           <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-            We collaborate with founders, studios and brands that care about
-            how their product feels — not just how it looks.
+            We collaborate with founders, studios and brands that care about how
+            their product feels — not just how it looks.
           </p>
 
           <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed mt-4">
-            Whether you need a launch-ready landing page or a full digital system,
-            we help turn your story into a clear, modern, structured experience.
+            Whether you need a launch-ready landing page or a full digital
+            system, we help turn your story into a clear, modern, structured
+            experience.
           </p>
         </motion.div>
 
-        {/* CONTACT BUTTON (добавлено здесь) */}
         <motion.div
           variants={itemVariants}
           initial="hidden"
@@ -212,12 +230,14 @@ export const AboutScene = () => {
           className="mt-12"
         >
           <button
-            onClick={() => (window.location.href = "mailto:zarytskyi4444@gmail.com")}
+            onClick={() =>
+              (window.location.href = "mailto:zarytskyi4444@gmail.com")
+            }
             className="
-              px-8 py-4 
-              border border-foreground 
-              text-foreground 
-              text-xs md:text-sm 
+              px-8 py-4
+              border border-foreground
+              text-foreground
+              text-xs md:text-sm
               uppercase tracking-[0.2em]
               hover:bg-foreground hover:text-background
               transition-all duration-300
@@ -226,52 +246,131 @@ export const AboutScene = () => {
             Contact Us
           </button>
         </motion.div>
+      </div>
 
-        {/* Footer */}
-        <motion.footer
-          variants={itemVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="mt-32 pt-8 border-t border-border"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">
+      <motion.footer
+        variants={itemVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.25 }}
+        className="mt-auto w-full"
+      >
+        <div className="w-full border-t border-border/70">
+          <div className="container mx-auto px-6 md:px-12 pt-10 md:pt-14 pb-8 md:pb-10">
+            <div className="mb-20 md:mb-14">
+              <div className="text-sm md:text-base font-semibold tracking-tight text-foreground uppercase">
                 VELDREN
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                © 2024 All rights reserved
-              </p>
+              </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-              <a
-                href="mailto:hello@veldren.com"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                hello@veldren.com
-              </a>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 items-start mb-20 md:mb-32">
+              <div className="md:col-span-3">
+                <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-6">
+                  Navigation
+                </div>
+                <nav className="space-y-2">
+                  {navItems.map((l) => (
+                    <button
+                      key={l.label}
+                      type="button"
+                      onClick={() => scrollToScene?.(l.id)}
+                      className="block w-full text-left text-3xl md:text-4xl leading-[1.05] tracking-tight text-foreground/70 hover:text-foreground transition-colors"
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
 
-              <a
-                href="mailto:info@veldren.com"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                info@veldren.com
-              </a>
+              <div className="md:col-span-3">
+                <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-6">
+                  Socials
+                </div>
+                <div className="space-y-2">
+                  <a
+                    href="#"
+                    className="block text-3xl md:text-4xl leading-[1.05] tracking-tight text-foreground/70 hover:text-foreground transition-colors"
+                  >
+                    Instagram
+                  </a>
+                </div>
+              </div>
 
+              <div className="hidden md:block md:col-span-1 relative">
+                <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 border-l border-border/70" />
+              </div>
+
+              <div className="md:col-span-3">
+                <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-6">
+                  Contact
+                </div>
+
+                <a
+                  href="mailto:zarytskyi4444@gmail.com"
+                  className="block text-xl md:text-2xl leading-tight text-foreground/70 hover:text-foreground transition-colors break-all"
+                >
+                  hello@veldren.com
+                </a>
+
+                <a
+                  href="https://t.me/uu_4444"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mt-3 text-xl md:text-2xl leading-tight text-foreground/70 hover:text-foreground transition-colors"
+                >
+                  Telegram
+                </a>
+              </div>
+
+              <div className="md:col-span-2">
+                <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground mb-6">
+                  Location
+                </div>
+                <div className="text-xl md:text-2xl leading-tight text-foreground/70">
+                  Kyiv
+                  <br />
+                  02000
+                </div>
+              </div>
+            </div>
+
+         <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+         <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+           © {new Date().getFullYear()} VELDREN
+         </div>
+          
+            <div className="flex gap-4 text-xs uppercase tracking-[0.22em] text-muted-foreground">
               <a
-                href="https://t.me/uu_4444"
+                href="https://policies.google.com/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="hover:text-foreground transition-colors"
               >
-                Telegram
+                Privacy
+              </a>
+              <span className="opacity-40">•</span>
+              <a
+                href="https://policies.google.com/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                Terms
+              </a>
+              <span className="opacity-40">•</span>
+              <a
+                href="https://policies.google.com/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                Legal
               </a>
             </div>
           </div>
-        </motion.footer>
-      </div>
+          </div>
+        </div>
+      </motion.footer>
     </div>
   );
 };
