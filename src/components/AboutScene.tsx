@@ -81,7 +81,11 @@ export const AboutScene = ({
 
   const canSend = useMemo(() => {
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email.trim());
-    return lead.name.trim().length > 1 && emailOk && lead.message.trim().length > 5;
+    return (
+      lead.name.trim().length > 1 &&
+      emailOk &&
+      lead.message.trim().length > 5
+    );
   }, [lead.email, lead.message, lead.name]);
 
   useEffect(() => {
@@ -435,7 +439,7 @@ export const AboutScene = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: EASE }}
-            className="fixed inset-0 z-[999] flex items-end md:items-center justify-center"
+            className="fixed inset-0 z-[999] flex items-end md:items-center justify-center p-3 md:p-6 overflow-y-auto"
           >
             <button
               type="button"
@@ -452,11 +456,13 @@ export const AboutScene = ({
               className="
                 relative w-full md:max-w-[780px]
                 border border-border/70 bg-card/50 backdrop-blur-md
-                mx-3 md:mx-6
-                mb-3 md:mb-0
+                mx-auto
+                mb-0 md:mb-0
+                max-h-[calc(100dvh-24px)]
+                overflow-hidden
               "
             >
-              <div className="px-5 md:px-10 py-6 md:py-8">
+              <div className="px-5 md:px-10 py-6 md:py-8 overflow-y-auto max-h-[calc(100dvh-24px)]">
                 <div className="flex items-start justify-between gap-6">
                   <div>
                     <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
@@ -489,7 +495,9 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.name}
-                        onChange={(e) => setLead((s) => ({ ...s, name: e.target.value }))}
+                        onChange={(e) =>
+                          setLead((s) => ({ ...s, name: e.target.value }))
+                        }
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="Your name"
                         autoFocus
@@ -502,7 +510,9 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.email}
-                        onChange={(e) => setLead((s) => ({ ...s, email: e.target.value }))}
+                        onChange={(e) =>
+                          setLead((s) => ({ ...s, email: e.target.value }))
+                        }
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="you@company.com"
                         inputMode="email"
@@ -515,7 +525,9 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.company}
-                        onChange={(e) => setLead((s) => ({ ...s, company: e.target.value }))}
+                        onChange={(e) =>
+                          setLead((s) => ({ ...s, company: e.target.value }))
+                        }
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="Optional"
                       />
@@ -527,7 +539,9 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.timeline}
-                        onChange={(e) => setLead((s) => ({ ...s, timeline: e.target.value }))}
+                        onChange={(e) =>
+                          setLead((s) => ({ ...s, timeline: e.target.value }))
+                        }
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="2–4 weeks / ASAP / etc."
                       />
@@ -539,7 +553,9 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.budget}
-                        onChange={(e) => setLead((s) => ({ ...s, budget: e.target.value }))}
+                        onChange={(e) =>
+                          setLead((s) => ({ ...s, budget: e.target.value }))
+                        }
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="$2k–$5k / $10k+ / etc."
                       />
@@ -551,7 +567,9 @@ export const AboutScene = ({
                       </div>
                       <textarea
                         value={lead.message}
-                        onChange={(e) => setLead((s) => ({ ...s, message: e.target.value }))}
+                        onChange={(e) =>
+                          setLead((s) => ({ ...s, message: e.target.value }))
+                        }
                         className="w-full min-h-[140px] bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors resize-none"
                         placeholder="What are we building? Links, references, goals…"
                       />
