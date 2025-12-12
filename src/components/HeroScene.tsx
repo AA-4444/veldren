@@ -116,11 +116,11 @@ export const HeroScene = () => {
           </h2>
 
           <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground/40 uppercase tracking-tight leading-tight">
-            <WordsLine text="BOLD," startDelay={2.6} />
+            <WordsLine text="SHARP," startDelay={2.6} />
             <br />
-            <WordsLine text="MODERN" startDelay={3.0} />
+            <WordsLine text="INTENTIONAL" startDelay={3.0} />
             <br />
-            <WordsLine text="EXPERIENCES." startDelay={3.4} />
+            <WordsLine text="DIGITAL." startDelay={3.4} />
           </h3>
         </div>
       </div>
@@ -141,9 +141,18 @@ export const HeroScene = () => {
         }}
         className="absolute top-6 md:top-8 left-0 w-full z-40 px-4 md:px-8"
       >
-        <h1 className="text-[15vw] md:text-[12vw] font-bold text-foreground tracking-tighter leading-none">
-          VELDREN
-        </h1>
+       <h1
+         className="
+           text-[15vw] md:text-[12vw]
+           font-black
+           text-foreground
+           tracking-[-0.04em]
+           leading-none
+           will-change-transform
+         "
+       >
+         VELDREN
+       </h1>
       </motion.div>
     </div>
   );
