@@ -341,7 +341,7 @@ export const AboutScene = ({
           
             <div className="flex gap-4 text-xs uppercase tracking-[0.22em] text-muted-foreground">
               <a
-                href="https://policies.google.com/privacy"
+                href="/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-foreground transition-colors"
