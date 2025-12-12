@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useMemo, useState } from "react";
 
 import oleksii from "@/assets/2.png";
 import sofia from "@/assets/1.png";
 import borislav from "@/assets/borislav.png";
-import { Link } from "react-router-dom";
 
 interface Founder {
   name: string;
@@ -13,6 +13,8 @@ interface Founder {
 }
 
 type SceneId = "home" | "mission" | "works" | "services" | "about";
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export const AboutScene = ({
   scrollToScene,
@@ -35,7 +37,7 @@ export const AboutScene = ({
     {
       name: "Boryslav Kyselov",
       role: "CEO",
-      quote: "Design builds emotion; motion gives it a voice.",
+      quote: "Clarity of vision turns complexity into direction.",
       image: borislav,
     },
   ];
@@ -53,7 +55,7 @@ export const AboutScene = ({
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.8, ease: EASE },
     },
   };
 
@@ -66,6 +68,66 @@ export const AboutScene = ({
     { label: "Services", id: "services" },
     { label: "About", id: "about" },
   ];
+
+  const [leadOpen, setLeadOpen] = useState(false);
+  const [lead, setLead] = useState({
+    name: "",
+    email: "",
+    company: "",
+    budget: "",
+    timeline: "",
+    message: "",
+  });
+
+  const canSend = useMemo(() => {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email.trim());
+    return lead.name.trim().length > 1 && emailOk && lead.message.trim().length > 5;
+  }, [lead.email, lead.message, lead.name]);
+
+  useEffect(() => {
+    if (!leadOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLeadOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prev;
+    };
+  }, [leadOpen]);
+
+  const sendLead = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSend) return;
+
+    const subject = encodeURIComponent(`VELDREN / New inquiry — ${lead.name}`);
+    const body = encodeURIComponent(
+      [
+        `Name: ${lead.name}`,
+        `Email: ${lead.email}`,
+        lead.company ? `Company: ${lead.company}` : "",
+        lead.budget ? `Budget: ${lead.budget}` : "",
+        lead.timeline ? `Timeline: ${lead.timeline}` : "",
+        "",
+        lead.message,
+      ]
+        .filter(Boolean)
+        .join("\n")
+    );
+
+    window.location.href = `mailto:hello@veldren.com?subject=${subject}&body=${body}`;
+    setLeadOpen(false);
+    setLead({
+      name: "",
+      email: "",
+      company: "",
+      budget: "",
+      timeline: "",
+      message: "",
+    });
+  };
 
   return (
     <div
@@ -174,7 +236,7 @@ export const AboutScene = ({
                 transition={{
                   duration: 0.7,
                   delay: 0.1 + index * 0.1,
-                  ease: [0.22, 1, 0.36, 1],
+                  ease: EASE,
                 }}
               >
                 <motion.div
@@ -230,9 +292,7 @@ export const AboutScene = ({
           className="mt-12"
         >
           <button
-            onClick={() =>
-              (window.location.href = "mailto:zarytskyi4444@gmail.com")
-            }
+            onClick={() => setLeadOpen(true)}
             className="
               px-8 py-4
               border border-foreground
@@ -305,12 +365,13 @@ export const AboutScene = ({
                   Contact
                 </div>
 
-                <a
-                  href="mailto:zarytskyi4444@gmail.com"
-                  className="block text-xl md:text-2xl leading-tight text-foreground/70 hover:text-foreground transition-colors break-all"
+                <button
+                  type="button"
+                  onClick={() => setLeadOpen(true)}
+                  className="block text-left text-xl md:text-2xl leading-tight text-foreground/70 hover:text-foreground transition-colors break-all"
                 >
                   hello@veldren.com
-                </a>
+                </button>
 
                 <a
                   href="https://t.me/uu_4444"
@@ -334,43 +395,215 @@ export const AboutScene = ({
               </div>
             </div>
 
-         <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-         <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-           © {new Date().getFullYear()} VELDREN
-         </div>
-          
-            <div className="flex gap-4 text-xs uppercase tracking-[0.22em] text-muted-foreground">
-              <a
-                href="/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                Privacy
-              </a>
-              <span className="opacity-40">•</span>
-              <a
-                href="https://policies.google.com/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                Terms
-              </a>
-              <span className="opacity-40">•</span>
-              <a
-                href="https://policies.google.com/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors"
-              >
-                Legal
-              </a>
+            <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                © {new Date().getFullYear()} VELDREN
+              </div>
+
+              <div className="flex gap-4 text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                <a href="/privacy" className="hover:text-foreground transition-colors">
+                  Privacy
+                </a>
+                <span className="opacity-40">•</span>
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Terms
+                </a>
+                <span className="opacity-40">•</span>
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  Legal
+                </a>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </motion.footer>
+
+      <AnimatePresence>
+        {leadOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: EASE }}
+            className="fixed inset-0 z-[999] flex items-end md:items-center justify-center"
+          >
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={() => setLeadOpen(false)}
+              className="absolute inset-0 bg-background/70 backdrop-blur-md"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
+              transition={{ duration: 0.35, ease: EASE }}
+              className="
+                relative w-full md:max-w-[780px]
+                border border-border/70 bg-card/50 backdrop-blur-md
+                mx-3 md:mx-6
+                mb-3 md:mb-0
+              "
+            >
+              <div className="px-5 md:px-10 py-6 md:py-8">
+                <div className="flex items-start justify-between gap-6">
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                      VELDREN / INQUIRY
+                    </div>
+                    <div className="mt-3 text-2xl md:text-3xl font-black tracking-tight text-foreground">
+                      Make a request
+                    </div>
+                    <div className="mt-2 text-sm text-foreground/80 leading-relaxed max-w-xl">
+                      Send details — we’ll reply with next steps.
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setLeadOpen(false)}
+                    className="text-xs uppercase tracking-[0.22em] text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+
+                <div className="mt-6 border-t border-border/70" />
+
+                <form onSubmit={sendLead} className="mt-6 space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                    <div className="space-y-2">
+                      <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                        Name
+                      </div>
+                      <input
+                        value={lead.name}
+                        onChange={(e) => setLead((s) => ({ ...s, name: e.target.value }))}
+                        className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
+                        placeholder="Your name"
+                        autoFocus
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                        Email
+                      </div>
+                      <input
+                        value={lead.email}
+                        onChange={(e) => setLead((s) => ({ ...s, email: e.target.value }))}
+                        className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
+                        placeholder="you@company.com"
+                        inputMode="email"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                        Company
+                      </div>
+                      <input
+                        value={lead.company}
+                        onChange={(e) => setLead((s) => ({ ...s, company: e.target.value }))}
+                        className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
+                        placeholder="Optional"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                        Timeline
+                      </div>
+                      <input
+                        value={lead.timeline}
+                        onChange={(e) => setLead((s) => ({ ...s, timeline: e.target.value }))}
+                        className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
+                        placeholder="2–4 weeks / ASAP / etc."
+                      />
+                    </div>
+
+                    <div className="space-y-2 md:col-span-2">
+                      <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                        Budget
+                      </div>
+                      <input
+                        value={lead.budget}
+                        onChange={(e) => setLead((s) => ({ ...s, budget: e.target.value }))}
+                        className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
+                        placeholder="$2k–$5k / $10k+ / etc."
+                      />
+                    </div>
+
+                    <div className="space-y-2 md:col-span-2">
+                      <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                        Message
+                      </div>
+                      <textarea
+                        value={lead.message}
+                        onChange={(e) => setLead((s) => ({ ...s, message: e.target.value }))}
+                        className="w-full min-h-[140px] bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors resize-none"
+                        placeholder="What are we building? Links, references, goals…"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-2">
+                    <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                      Status: {canSend ? "READY" : "INCOMPLETE"}
+                    </div>
+
+                    <div className="flex gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setLeadOpen(false)}
+                        className="
+                          px-6 py-3
+                          border border-border/70
+                          text-foreground/80
+                          text-xs md:text-sm
+                          uppercase tracking-[0.22em]
+                          hover:border-foreground hover:text-foreground
+                          transition-all duration-300
+                        "
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        type="submit"
+                        disabled={!canSend}
+                        className="
+                          px-6 py-3
+                          border border-foreground
+                          text-foreground
+                          text-xs md:text-sm
+                          uppercase tracking-[0.22em]
+                          hover:bg-foreground hover:text-background
+                          transition-all duration-300
+                          disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-foreground
+                        "
+                      >
+                        Send request
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
