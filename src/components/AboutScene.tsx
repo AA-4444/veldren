@@ -514,7 +514,7 @@ export const AboutScene = ({
                           setLead((s) => ({ ...s, email: e.target.value }))
                         }
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
-                        placeholder="you@company.com"
+                        placeholder="hello@veldren.com"
                         inputMode="email"
                       />
                     </div>
