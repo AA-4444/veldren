@@ -119,7 +119,7 @@ export const AboutScene = ({
    try {
      const endpoint = "https://formsubmit.co/ajax/hello@veldren.com";
  
-     // FormSubmit надёжнее работает с FormData (а не JSON)
+
      const formData = new FormData();
      formData.append("name", lead.name);
      formData.append("email", lead.email);
@@ -128,13 +128,13 @@ export const AboutScene = ({
      formData.append("timeline", lead.timeline);
      formData.append("message", lead.message);
  
-     // спец-поля FormSubmit
+     //  FormSubmit
      formData.append("_subject", `VELDREN / New inquiry — ${lead.name}`);
      formData.append("_replyto", lead.email);
      formData.append("_captcha", "false");
      formData.append("_template", "table");
  
-     // honeypot (если бот заполнит — FormSubmit может отфильтровать)
+     // honeypot 
      formData.append("_honey", "");
  
      const res = await fetch(endpoint, {
@@ -145,7 +145,7 @@ export const AboutScene = ({
        },
      });
  
-     // пытаемся прочитать ответ (иногда он не JSON)
+    
      const contentType = res.headers.get("content-type") || "";
      const data = contentType.includes("application/json")
        ? await res.json()
@@ -156,7 +156,7 @@ export const AboutScene = ({
        throw new Error(typeof data === "string" ? data : "Failed to send");
      }
  
-     // успех
+
      setLeadOpen(false);
      resetLead();
    } catch (err) {
