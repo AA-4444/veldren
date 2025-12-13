@@ -100,61 +100,72 @@ export const AboutScene = ({
     };
   }, [leadOpen]);
 
-  const resetLead = () =>
-    setLead({
-      name: "",
-      email: "",
-      company: "",
-      budget: "",
-      timeline: "",
-      message: "",
-    });
-
-  const sendLead = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!canSend || sending) return;
-
-    setSending(true);
-    try {
-      // FormSubmit AJAX endpoint (без редиректа)
-      const endpoint = "https://formsubmit.co/ajax/hello@veldren.com";
-
-      const payload = {
-        name: lead.name,
-        email: lead.email,
-        company: lead.company,
-        budget: lead.budget,
-        timeline: lead.timeline,
-        message: lead.message,
-
-        // специальные поля FormSubmit:
-        _subject: `VELDREN / New inquiry — ${lead.name}`,
-        _replyto: lead.email, // чтобы "Reply" отвечал клиенту
-        _captcha: "false",
-        _template: "table",
-      };
-
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error("Failed to send");
-
-      // успех
-      setLeadOpen(false);
-      resetLead();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to send. Try again.");
-    } finally {
-      setSending(false);
-    }
-  };
+ const resetLead = () =>
+   setLead({
+     name: "",
+     email: "",
+     company: "",
+     budget: "",
+     timeline: "",
+     message: "",
+   });
+ 
+ const sendLead = async (e: React.FormEvent) => {
+   e.preventDefault();
+   if (!canSend || sending) return;
+ 
+   setSending(true);
+ 
+   try {
+     const endpoint = "https://formsubmit.co/ajax/hello@veldren.com";
+ 
+     // FormSubmit надёжнее работает с FormData (а не JSON)
+     const formData = new FormData();
+     formData.append("name", lead.name);
+     formData.append("email", lead.email);
+     formData.append("company", lead.company);
+     formData.append("budget", lead.budget);
+     formData.append("timeline", lead.timeline);
+     formData.append("message", lead.message);
+ 
+     // спец-поля FormSubmit
+     formData.append("_subject", `VELDREN / New inquiry — ${lead.name}`);
+     formData.append("_replyto", lead.email);
+     formData.append("_captcha", "false");
+     formData.append("_template", "table");
+ 
+     // honeypot (если бот заполнит — FormSubmit может отфильтровать)
+     formData.append("_honey", "");
+ 
+     const res = await fetch(endpoint, {
+       method: "POST",
+       body: formData,
+       headers: {
+         Accept: "application/json",
+       },
+     });
+ 
+     // пытаемся прочитать ответ (иногда он не JSON)
+     const contentType = res.headers.get("content-type") || "";
+     const data = contentType.includes("application/json")
+       ? await res.json()
+       : await res.text();
+ 
+     if (!res.ok) {
+       console.error("FormSubmit error:", data);
+       throw new Error(typeof data === "string" ? data : "Failed to send");
+     }
+ 
+     // успех
+     setLeadOpen(false);
+     resetLead();
+   } catch (err) {
+     console.error(err);
+     alert("Failed to send. Try again.");
+   } finally {
+     setSending(false);
+   }
+ };
 
   return (
     <div
