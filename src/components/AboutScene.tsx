@@ -70,6 +70,8 @@ export const AboutScene = ({
   ];
 
   const [leadOpen, setLeadOpen] = useState(false);
+  const [sending, setSending] = useState(false);
+
   const [lead, setLead] = useState({
     name: "",
     email: "",
@@ -81,11 +83,7 @@ export const AboutScene = ({
 
   const canSend = useMemo(() => {
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email.trim());
-    return (
-      lead.name.trim().length > 1 &&
-      emailOk &&
-      lead.message.trim().length > 5
-    );
+    return lead.name.trim().length > 1 && emailOk && lead.message.trim().length > 5;
   }, [lead.email, lead.message, lead.name]);
 
   useEffect(() => {
@@ -102,27 +100,7 @@ export const AboutScene = ({
     };
   }, [leadOpen]);
 
-  const sendLead = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!canSend) return;
-
-    const subject = encodeURIComponent(`VELDREN / New inquiry — ${lead.name}`);
-    const body = encodeURIComponent(
-      [
-        `Name: ${lead.name}`,
-        `Email: ${lead.email}`,
-        lead.company ? `Company: ${lead.company}` : "",
-        lead.budget ? `Budget: ${lead.budget}` : "",
-        lead.timeline ? `Timeline: ${lead.timeline}` : "",
-        "",
-        lead.message,
-      ]
-        .filter(Boolean)
-        .join("\n")
-    );
-
-    window.location.href = `mailto:hello@veldren.com?subject=${subject}&body=${body}`;
-    setLeadOpen(false);
+  const resetLead = () =>
     setLead({
       name: "",
       email: "",
@@ -131,6 +109,51 @@ export const AboutScene = ({
       timeline: "",
       message: "",
     });
+
+  const sendLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSend || sending) return;
+
+    setSending(true);
+    try {
+      // FormSubmit AJAX endpoint (без редиректа)
+      const endpoint = "https://formsubmit.co/ajax/hello@veldren.com";
+
+      const payload = {
+        name: lead.name,
+        email: lead.email,
+        company: lead.company,
+        budget: lead.budget,
+        timeline: lead.timeline,
+        message: lead.message,
+
+        // специальные поля FormSubmit:
+        _subject: `VELDREN / New inquiry — ${lead.name}`,
+        _replyto: lead.email, // чтобы "Reply" отвечал клиенту
+        _captcha: "false",
+        _template: "table",
+      };
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Failed to send");
+
+      // успех
+      setLeadOpen(false);
+      resetLead();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to send. Try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -495,9 +518,7 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.name}
-                        onChange={(e) =>
-                          setLead((s) => ({ ...s, name: e.target.value }))
-                        }
+                        onChange={(e) => setLead((s) => ({ ...s, name: e.target.value }))}
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="Your name"
                         autoFocus
@@ -510,9 +531,7 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.email}
-                        onChange={(e) =>
-                          setLead((s) => ({ ...s, email: e.target.value }))
-                        }
+                        onChange={(e) => setLead((s) => ({ ...s, email: e.target.value }))}
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="hello@veldren.com"
                         inputMode="email"
@@ -525,9 +544,7 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.company}
-                        onChange={(e) =>
-                          setLead((s) => ({ ...s, company: e.target.value }))
-                        }
+                        onChange={(e) => setLead((s) => ({ ...s, company: e.target.value }))}
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="Optional"
                       />
@@ -539,9 +556,7 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.timeline}
-                        onChange={(e) =>
-                          setLead((s) => ({ ...s, timeline: e.target.value }))
-                        }
+                        onChange={(e) => setLead((s) => ({ ...s, timeline: e.target.value }))}
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="2–4 weeks / ASAP / etc."
                       />
@@ -553,9 +568,7 @@ export const AboutScene = ({
                       </div>
                       <input
                         value={lead.budget}
-                        onChange={(e) =>
-                          setLead((s) => ({ ...s, budget: e.target.value }))
-                        }
+                        onChange={(e) => setLead((s) => ({ ...s, budget: e.target.value }))}
                         className="w-full bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors"
                         placeholder="$2k–$5k / $10k+ / etc."
                       />
@@ -567,9 +580,7 @@ export const AboutScene = ({
                       </div>
                       <textarea
                         value={lead.message}
-                        onChange={(e) =>
-                          setLead((s) => ({ ...s, message: e.target.value }))
-                        }
+                        onChange={(e) => setLead((s) => ({ ...s, message: e.target.value }))}
                         className="w-full min-h-[140px] bg-transparent border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-foreground transition-colors resize-none"
                         placeholder="What are we building? Links, references, goals…"
                       />
@@ -578,7 +589,7 @@ export const AboutScene = ({
 
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-2">
                     <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                      Status: {canSend ? "READY" : "INCOMPLETE"}
+                      Status: {canSend ? (sending ? "SENDING" : "READY") : "INCOMPLETE"}
                     </div>
 
                     <div className="flex gap-3">
@@ -600,7 +611,7 @@ export const AboutScene = ({
 
                       <button
                         type="submit"
-                        disabled={!canSend}
+                        disabled={!canSend || sending}
                         className="
                           px-6 py-3
                           border border-foreground
@@ -612,7 +623,7 @@ export const AboutScene = ({
                           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-foreground
                         "
                       >
-                        Send request
+                        {sending ? "Sending..." : "Send request"}
                       </button>
                     </div>
                   </div>
