@@ -386,7 +386,7 @@ export const AboutScene = ({
                 </div>
                 <div className="space-y-2">
                   <a
-                    href="#"
+                    href="https://www.instagram.com/helloveldren?igsh=MWRpMmk5bnBxc24ycw%3D%3D&utm_source=qr"
                     className="block text-3xl md:text-4xl leading-[1.05] tracking-tight text-foreground/70 hover:text-foreground transition-colors"
                   >
                     Instagram
